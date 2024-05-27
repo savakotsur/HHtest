@@ -8,21 +8,10 @@
 import SwiftUI
 
 class AppCoordinator {
-//    var window: UIWindow?
-//
-//    init(window: UIWindow?) {
-//        self.window = window
-//    }
-    
-//    func start() {
-//        let tabView = MainTabView(coordinator: self)
-//        let hostingController = UIHostingController(rootView: tabView)
-//        window?.rootViewController = hostingController
-//        window?.makeKeyAndVisible()
-//    }
     
     func start() -> some View {
         MainTabView(coordinator: self)
+            .preferredColorScheme(.dark)
     }
     
     func showSearch() -> SearchCoordinator {
