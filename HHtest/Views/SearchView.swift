@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct SearchView: View {
-    @ObservedObject var viewModel: SearchViewModel
+    @StateObject var viewModel: SearchViewModel
     
     var body: some View {
-        Text("1")
+        ScrollView {
+            if let homeScreenData = viewModel.homeScreenData {
+                ForEach(homeScreenData.vacancies) {vacancy in
+                    VacancyBlock(vacancy: vacancy, viewModel: viewModel)
+                }
+            }
+        }
     }
 }

@@ -27,6 +27,8 @@
 		E2D752902C052BE700B67887 /* ResponsesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D7528F2C052BE700B67887 /* ResponsesViewModel.swift */; };
 		E2D752922C052BF600B67887 /* MessagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D752912C052BF600B67887 /* MessagesViewModel.swift */; };
 		E2D752942C052C0000B67887 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D752932C052C0000B67887 /* ProfileViewModel.swift */; };
+		E2D752962C0601DE00B67887 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D752952C0601DE00B67887 /* MainModel.swift */; };
+		E2D752992C06048800B67887 /* VacancyBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D752982C06048800B67887 /* VacancyBlock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,8 @@
 		E2D7528F2C052BE700B67887 /* ResponsesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsesViewModel.swift; sourceTree = "<group>"; };
 		E2D752912C052BF600B67887 /* MessagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewModel.swift; sourceTree = "<group>"; };
 		E2D752932C052C0000B67887 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		E2D752952C0601DE00B67887 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
+		E2D752982C06048800B67887 /* VacancyBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyBlock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,11 +87,11 @@
 		E2D7525E2C050F9F00B67887 /* HHtest */ = {
 			isa = PBXGroup;
 			children = (
+				E2D7525F2C050F9F00B67887 /* HHtestApp.swift */,
 				E2D7526D2C051E2E00B67887 /* Views */,
 				E2D7526F2C051E4500B67887 /* ViewModels */,
 				E2D7526E2C051E3F00B67887 /* Models */,
 				E2D752702C051E4D00B67887 /* Coordinators */,
-				E2D7525F2C050F9F00B67887 /* HHtestApp.swift */,
 				E2D752632C050FA000B67887 /* Assets.xcassets */,
 				E2D752652C050FA000B67887 /* Preview Content */,
 			);
@@ -111,6 +115,7 @@
 				E2D752852C0529E300B67887 /* ResponsesView.swift */,
 				E2D752872C0529EE00B67887 /* MessagesView.swift */,
 				E2D752892C0529F800B67887 /* ProfileView.swift */,
+				E2D752972C06036800B67887 /* Components */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -118,6 +123,7 @@
 		E2D7526E2C051E3F00B67887 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E2D752952C0601DE00B67887 /* MainModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -145,6 +151,14 @@
 				E2D7527D2C05253800B67887 /* ProfileCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		E2D752972C06036800B67887 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E2D752982C06048800B67887 /* VacancyBlock.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,11 +232,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2D7527C2C05252300B67887 /* MessagesCoordinator.swift in Sources */,
+				E2D752992C06048800B67887 /* VacancyBlock.swift in Sources */,
 				E2D752862C0529E300B67887 /* ResponsesView.swift in Sources */,
 				E2D7528C2C052BC900B67887 /* SearchViewModel.swift in Sources */,
 				E2D752722C05221400B67887 /* AppCoordinator.swift in Sources */,
 				E2D752762C0524E800B67887 /* SearchCoordinator.swift in Sources */,
 				E2D752882C0529EE00B67887 /* MessagesView.swift in Sources */,
+				E2D752962C0601DE00B67887 /* MainModel.swift in Sources */,
 				E2D752922C052BF600B67887 /* MessagesViewModel.swift in Sources */,
 				E2D7528E2C052BDC00B67887 /* FavoritesViewModel.swift in Sources */,
 				E2D752602C050F9F00B67887 /* HHtestApp.swift in Sources */,
