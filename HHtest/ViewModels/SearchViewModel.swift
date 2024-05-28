@@ -6,13 +6,10 @@
 //
 
 import Foundation
-import Combine
 
 class SearchViewModel: ObservableObject {
     private var coordinator: SearchCoordinator
     @Published var homeScreenData: HomeScreenData?
-    private var cancellables = Set<AnyCancellable>()
-    
     
     init(coordinator: SearchCoordinator) {
         self.coordinator = coordinator
