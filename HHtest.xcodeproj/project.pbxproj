@@ -29,6 +29,7 @@
 		E2D752942C052C0000B67887 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D752932C052C0000B67887 /* ProfileViewModel.swift */; };
 		E2D752962C0601DE00B67887 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D752952C0601DE00B67887 /* MainModel.swift */; };
 		E2D752992C06048800B67887 /* VacancyBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D752982C06048800B67887 /* VacancyBlock.swift */; };
+		E2D7529D2C06A1B600B67887 /* OffersScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D7529C2C06A1B600B67887 /* OffersScroll.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		E2D752932C052C0000B67887 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E2D752952C0601DE00B67887 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		E2D752982C06048800B67887 /* VacancyBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyBlock.swift; sourceTree = "<group>"; };
+		E2D7529C2C06A1B600B67887 /* OffersScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersScroll.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				E2D752982C06048800B67887 /* VacancyBlock.swift */,
+				E2D7529C2C06A1B600B67887 /* OffersScroll.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				E2D752902C052BE700B67887 /* ResponsesViewModel.swift in Sources */,
 				E2D7527A2C05251400B67887 /* ResponsesCoordinator.swift in Sources */,
 				E2D752942C052C0000B67887 /* ProfileViewModel.swift in Sources */,
+				E2D7529D2C06A1B600B67887 /* OffersScroll.swift in Sources */,
 				E2D7527E2C05253800B67887 /* ProfileCoordinator.swift in Sources */,
 				E2D752842C0529D200B67887 /* FavoritesView.swift in Sources */,
 				E2D752742C05227A00B67887 /* MainTabView.swift in Sources */,

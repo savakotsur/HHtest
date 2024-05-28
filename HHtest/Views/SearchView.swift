@@ -37,62 +37,7 @@ struct SearchView: View {
                             .cornerRadius(10)
                     }
                     
-                    ScrollView (.horizontal, showsIndicators: false) {
-                        HStack {
-                            Group {
-                                VStack (alignment: .leading) {
-                                    Image("vacancies1")
-                                        .resizable()
-                                        .frame(width: 30.0, height: 30.0)
-                                        .padding(4)
-                                        .background(Color("blueElements"))
-                                        .cornerRadius(100)
-                                    Text("Вакансии рядом с вами")
-                                        .font(.callout)
-                                        .fontWeight(.medium)
-                                }
-                                .frame(maxWidth: screenSize.width / 2.4, minHeight: screenSize.height / 6.5)
-                                .background(Color("grayMain"))
-                                .cornerRadius(10)
-                            }
-                            Group {
-                                VStack (alignment: .leading) {
-                                    Image("star")
-                                        .resizable()
-                                        .frame(width: 30.0, height: 30.0)
-                                        .padding(4)
-                                        .background(Color("greenElements"))
-                                        .cornerRadius(100)
-                                    Text("Поднять резюме в поиске")
-                                        .font(.callout)
-                                        .fontWeight(.medium)
-                                    Text("Поднять")
-                                        .font(.callout)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(Color("greenMain"))
-                                }
-                                .frame(maxWidth: screenSize.width / 2.4, minHeight: screenSize.height / 6.5)
-                                .background(Color("grayMain"))
-                                .cornerRadius(10)
-                            }
-                            Group {
-                                VStack (alignment: .leading) {
-                                    Image("vacancies2")
-                                        .resizable()
-                                        .frame(width: 30.0, height: 30.0)
-                                        .padding(4)
-                                        .background(Color("greenElements"))
-                                        .cornerRadius(100)
-                                    Text("Временная работа или подработка")
-                                        .font(.callout)
-                                        .fontWeight(.medium)
-                                }
-                                .frame(maxWidth: screenSize.width / 2.4, minHeight: screenSize.height / 6.5)
-                                .background(Color("grayMain"))
-                                .cornerRadius(10)
-                            }
-                        }
-                    }.padding(.vertical, 8)
+                    OffersScroll()
                     
                     Text("Вакансии для вас")
                         .font(.title)
