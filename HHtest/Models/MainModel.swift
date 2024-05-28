@@ -14,7 +14,7 @@ struct HomeScreenData: Decodable {
 }
 
 // MARK: - Offer
-struct Offer: Decodable {
+struct Offer: Identifiable, Decodable {
     let id: String?
     let title: String
     let link: String
