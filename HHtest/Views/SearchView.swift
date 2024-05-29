@@ -12,6 +12,10 @@ struct SearchView: View {
     
     var body: some View {
         VStack {
+            GeometryReader { geometry in
+                Color.clear.frame(height: geometry.safeAreaInsets.top)
+            }
+            .frame(height: 0)
             ScrollView (showsIndicators: false) {
                 VStack (alignment: .leading) {
                     HStack {
@@ -21,19 +25,19 @@ struct SearchView: View {
                                 .frame(width: 30.0, height: 30.0)
                             Text("Должность, ключевые слова")
                                 .padding(.leading, 2)
-                                .foregroundColor(Color("grayText"))
+                                .foregroundColor(Color("gray3"))
                                 .font(.callout)
                             Spacer()
                         }
                         .frame(maxWidth: screenSize.width / 1.2)
                         .padding(10)
-                        .background(Color("graySearch"))
+                        .background(Color("gray2"))
                         .cornerRadius(10)
                         Image("filter")
                             .resizable()
                             .frame(width: 30.0, height: 30.0)
                             .padding(10)
-                            .background(Color("graySearch"))
+                            .background(Color("gray2"))
                             .cornerRadius(10)
                     }
                     
@@ -43,14 +47,26 @@ struct SearchView: View {
                         .font(.title)
                         .fontWeight(.bold)
                     if let homeScreenData = viewModel.homeScreenData {
-                        ForEach(homeScreenData.vacancies) {vacancy in
+                        ForEach(homeScreenData.vacancies.prefix(3)) {vacancy in
                             VacancyBlock(vacancy: vacancy, viewModel: viewModel)
                                 .padding(.vertical, 2)
                         }
+                        Button(action: {
+                            print("Кнопка отображения вакансий нажата")
+                        })
+                        {
+                            Text("Еще " + homeScreenData.vacancies.count.vacancies())
+                                .foregroundColor(Color("white"))
+                        }
+                        .frame(maxWidth: .infinity, minHeight: screenSize.height / 18)
+                        .background(Color("blue"))
+                        .cornerRadius(10)
+                        .padding(.vertical, 10)
                     }
                 }
                 .padding(.horizontal, 10)
             }
+            .background(Color("black").edgesIgnoringSafeArea(.top))
         }
     }
 }

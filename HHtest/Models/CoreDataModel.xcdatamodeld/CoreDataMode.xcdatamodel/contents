@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AddressEntity" representedClassName="AddressEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="house" optional="YES" attributeType="String"/>
+        <attribute name="street" optional="YES" attributeType="String"/>
+        <attribute name="town" optional="YES" attributeType="String"/>
+        <relationship name="favoriteVacancy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteVacancyEntity" inverseName="address" inverseEntity="FavoriteVacancyEntity"/>
+    </entity>
+    <entity name="ExpirienceEntity" representedClassName="ExpirienceEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="previewText" optional="YES" attributeType="String"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="favoriteVacancy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteVacancyEntity" inverseName="expirience" inverseEntity="FavoriteVacancyEntity"/>
+    </entity>
+    <entity name="FavoriteVacancyEntity" representedClassName="FavoriteVacancyEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="appliedNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="company" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="lookingNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="publishedDate" optional="YES" attributeType="String"/>
+        <attribute name="questions" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <attribute name="responsibilities" optional="YES" attributeType="String"/>
+        <attribute name="schedules" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="vacancyDescription" optional="YES" attributeType="String"/>
+        <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AddressEntity" inverseName="favoriteVacancy" inverseEntity="AddressEntity"/>
+        <relationship name="expirience" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExpirienceEntity" inverseName="favoriteVacancy" inverseEntity="ExpirienceEntity"/>
+        <relationship name="salary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SalaryEntity" inverseName="favoriteVacancy" inverseEntity="SalaryEntity"/>
+    </entity>
+    <entity name="SalaryEntity" representedClassName="SalaryEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="full" optional="YES" attributeType="String"/>
+        <attribute name="short" optional="YES" attributeType="String"/>
+        <relationship name="favoriteVacancy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteVacancyEntity" inverseName="salary" inverseEntity="FavoriteVacancyEntity"/>
+    </entity>
+</model>

@@ -16,7 +16,7 @@ struct VacancyBlock: View {
             VStack (alignment: .leading) {
                 if vacancy.lookingNumber != nil {
                     Text("Сейчас просматривает " + vacancy.lookingNumber!.people())
-                        .foregroundColor(Color("greenMain"))
+                        .foregroundColor(Color("green"))
                 }
                 Text(vacancy.title)
                     .fontWeight(.bold)
@@ -42,7 +42,7 @@ struct VacancyBlock: View {
                 }
                 
                 Text("Опубликовано " + viewModel.formattedDate(from: vacancy.publishedDate))
-                    .foregroundColor(Color("grayElements"))
+                    .foregroundColor(Color("gray3"))
                 Button(action: {
                     print("Кнопка откликнуться нажата")
                 })
@@ -51,7 +51,7 @@ struct VacancyBlock: View {
                         .foregroundColor(Color.white)
                 }
                 .frame(maxWidth: .infinity, minHeight: screenSize.height / 20)
-                .background(Color("greenMain"))
+                .background(Color("green"))
                 .cornerRadius(100)
             }
             if vacancy.isFavorite == false {
@@ -59,19 +59,19 @@ struct VacancyBlock: View {
                     .resizable()
                     .frame(width: 32.0, height: 32.0)
                     .onTapGesture {
-                        viewModel.toggleFavorite(for: vacancy.id)
+                        viewModel.addToFavorites(vacancyID: vacancy.id)
                     }
             } else {
                 Image("favorites.active")
                     .resizable()
                     .frame(width: 32.0, height: 32.0)
                     .onTapGesture {
-                        viewModel.toggleFavorite(for: vacancy.id)
+                        viewModel.removeFromFavorites(vacancyID: vacancy.id)
                     }
             }
         }
         .padding(20)
-        .background(Color("grayMain"))
+        .background(Color("gray1"))
         .cornerRadius(12)
     }
 }

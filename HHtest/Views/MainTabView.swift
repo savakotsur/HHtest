@@ -21,16 +21,22 @@ struct MainTabView: View {
                     .renderingMode(.template)
                 Text("Поиск")
             }
+            .toolbar(.visible, for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color("gray1"), for: .tabBar)
             
             NavigationView() {
                 let favoritesCoordinator = coordinator.showFavorites()
                 FavoritesView(viewModel: FavoritesViewModel(coordinator: favoritesCoordinator))
             }
             .tabItem {
-                Image("favorites")
+                Image("hearttab")
                     .renderingMode(.template)
                 Text("Избранное")
             }
+            .toolbar(.visible, for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color("gray1"), for: .tabBar)
             
             NavigationView() {
                 let responsesCoordinator = coordinator.showResponses()
@@ -41,6 +47,9 @@ struct MainTabView: View {
                     .renderingMode(.template)
                 Text("Отклики")
             }
+            .toolbar(.visible, for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color("gray1"), for: .tabBar)
             
             NavigationView() {
                 let messagesCoordinator = coordinator.showMessages()
@@ -51,6 +60,9 @@ struct MainTabView: View {
                     .renderingMode(.template)
                 Text("Сообщения")
             }
+            .toolbar(.visible, for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color("gray1"), for: .tabBar)
             
             NavigationView() {
                 let profileCoordinator = coordinator.showProfile()
@@ -61,6 +73,9 @@ struct MainTabView: View {
                     .renderingMode(.template)
                 Text("Профиль")
             }
+            .toolbar(.visible, for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color("gray1"), for: .tabBar)
         }
     }
 }
