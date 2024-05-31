@@ -47,8 +47,17 @@ struct SearchView: View {
                         .font(.title)
                         .fontWeight(.bold)
                     if let homeScreenData = viewModel.homeScreenData {
-                        ForEach(homeScreenData.vacancies.prefix(3)) {vacancy in
-                            VacancyBlock(vacancy: vacancy, viewModel: viewModel)
+                        ForEach(homeScreenData.vacancies.prefix(3)) { vacancy in
+                            VacancyBlock(vacancy: vacancy, onSelect: { vacancy in
+                                viewModel.coordinator.showVacancyDetail(viewModel: VacancyViewModel(coordinator: VacancyCoordinator(), context: viewModel.context, vacancy: vacancy))
+                                print("asdasd")
+                            }, onFavoriteTapped: {
+                                if vacancy.isFavorite {
+                                    viewModel.removeFromFavorites(vacancyID: vacancy.id)
+                                } else {
+                                    viewModel.addToFavorites(vacancyID: vacancy.id)
+                                }
+                            })
                                 .padding(.vertical, 2)
                         }
                         Button(action: {
@@ -64,7 +73,7 @@ struct SearchView: View {
                         .padding(.vertical, 10)
                     }
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
             }
             .background(Color("black").edgesIgnoringSafeArea(.top))
         }

@@ -7,15 +7,17 @@
 
 import CoreData
 import Foundation
+import Combine
 
 class SearchViewModel: ObservableObject {
-    private var coordinator: SearchCoordinator
+    var coordinator: SearchCoordinator
     @Published var homeScreenData: HomeScreenData?
+    private var cancellable: AnyCancellable?
+    let context: NSManagedObjectContext
     
-    private let context = PersistenceController.shared.container.viewContext
-    
-    init(coordinator: SearchCoordinator) {
+    init(coordinator: SearchCoordinator, context: NSManagedObjectContext) {
         self.coordinator = coordinator
+        self.context = context
         loadHomeScreen(from: URL(string: "https://run.mocky.io/v3/d67a278f-ddcb-438c-bf56-3194c529b12b")!)
     }
     
@@ -70,6 +72,19 @@ class SearchViewModel: ObservableObject {
     }
     
     private func configure(_ favoriteVacancy: FavoriteVacancyEntity, with vacancy: Vacancy) {
+        let addressEntity = AddressEntity(context: context)
+        addressEntity.house = vacancy.address.house
+        addressEntity.town = vacancy.address.town
+        addressEntity.street = vacancy.address.street
+        
+        let salaryEntity = SalaryEntity(context: context)
+        salaryEntity.full = vacancy.salary.full
+        salaryEntity.short = vacancy.salary.short
+        
+        let expirienceEntity = ExpirienceEntity(context: context)
+        expirienceEntity.previewText = vacancy.experience.previewText
+        expirienceEntity.text = vacancy.experience.text
+        
         favoriteVacancy.id = vacancy.id
         favoriteVacancy.lookingNumber = Int32(vacancy.lookingNumber ?? 0)
         favoriteVacancy.title = vacancy.title
@@ -79,69 +94,39 @@ class SearchViewModel: ObservableObject {
         favoriteVacancy.appliedNumber = Int32(vacancy.appliedNumber ?? 0)
         favoriteVacancy.vacancyDescription = vacancy.vacancyDescription
         favoriteVacancy.responsibilities = vacancy.responsibilities
-        favoriteVacancy.schedules = vacancy.schedules as NSObject
-        favoriteVacancy.questions = vacancy.questions as NSObject
-    }
-    
-    
-    func formattedDate(from dateString: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        if let date = dateFormatter.date(from: dateString) {
-            dateFormatter.dateFormat = "d MMMM"
-            dateFormatter.locale = Locale(identifier: "ru_RU") // Установим локаль для русского языка
-            return dateFormatter.string(from: date)
-        }
-        return dateString
+        favoriteVacancy.schedules = vacancy.schedules as NSArray
+        favoriteVacancy.questions = vacancy.questions as NSArray
+        favoriteVacancy.address = addressEntity
+        favoriteVacancy.salary = salaryEntity
+        favoriteVacancy.expirience = expirienceEntity
     }
     
     func loadHomeScreen(from url: URL) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error fetching home screen: \(error)")
-                return
-            }
-            
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            
-            do {
-                let homeScreenData = try JSONDecoder().decode(HomeScreenData.self, from: data)
-                DispatchQueue.main.async {
-                    self.homeScreenData = homeScreenData
+        cancellable = URLSession.shared.dataTaskPublisher(for: url)
+            .map(\.data)
+            .decode(type: HomeScreenData.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    print("Error fetching home screen: \(error)")
                 }
-            } catch {
-                print("Error decoding JSON: \(error)")
+            }, receiveValue: { [weak self] homeScreenData in
+                self?.homeScreenData = homeScreenData
+                self?.syncFavoritesWithCoreData()
+            })
+    }
+    
+    private func syncFavoritesWithCoreData() {
+            guard let homeScreenData = self.homeScreenData else {
+                return
+            }
+            
+            for vacancy in homeScreenData.vacancies {
+                if vacancy.isFavorite {
+                    saveToCoreData(vacancy: vacancy)
+                } else {
+                    deleteFromCoreData(vacancyID: vacancy.id)
+                }
             }
         }
-        task.resume()
-    }
-    
-    
-    //    func addToFavorites(vacancy: Vacancy) {
-    //        //ADD TO COREDATA
-    //        if let index = vacancies.firstIndex(where: { $0.id == vacancy.id }) {
-    //                vacancies[index].isFavorite = true
-    //        }
-    //    }
-}
-
-extension Int {
-    func people() -> String {
-        var peopleString = "человек"
-        if String(self % 10).contains(/[2-4]/) {peopleString = "человека"}
-        if 11...14 ~= self % 100 {peopleString = "человек"}
-        return "\(self) " + peopleString
-    }
-    
-    func vacancies() -> String {
-        var vacanciesString = "вакансий"
-        if String(self % 10).contains(/[1]/) {vacanciesString = "вакансия"}
-        if String(self % 10).contains(/[2-4]/) {vacanciesString = "вакансии"}
-        if String(self % 10).contains(/[5-9]/) {vacanciesString = "вакансий"}
-        if 11...14 ~= self % 100 {vacanciesString = "вакансий"}
-        return "\(self) " + vacanciesString
-    }
 }

@@ -11,6 +11,6 @@ struct ResponsesView: View {
     @ObservedObject var viewModel: ResponsesViewModel
 
     var body: some View {
-        Text("3")
+        Text("Отклики")
     }
 }

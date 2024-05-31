@@ -59,3 +59,35 @@ struct Salary: Decodable {
     let full: String
     let short: String?
 }
+
+extension Int {
+    func people() -> String {
+        var peopleString = "человек"
+        if String(self % 10).contains(/[2-4]/) {peopleString = "человека"}
+        if 11...14 ~= self % 100 {peopleString = "человек"}
+        return "\(self) " + peopleString
+    }
+    
+    func vacancies() -> String {
+        var vacanciesString = "вакансий"
+        if String(self % 10).contains(/[1]/) {vacanciesString = "вакансия"}
+        if String(self % 10).contains(/[2-4]/) {vacanciesString = "вакансии"}
+        if String(self % 10).contains(/[5-9]/) {vacanciesString = "вакансий"}
+        if 11...14 ~= self % 100 {vacanciesString = "вакансий"}
+        return "\(self) " + vacanciesString
+    }
+}
+
+extension String {
+    func formattedDate() -> String {
+        let dateString = self
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "d MMMM"
+            dateFormatter.locale = Locale(identifier: "ru_RU")
+            return dateFormatter.string(from: date)
+        }
+        return dateString
+    }
+}

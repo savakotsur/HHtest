@@ -8,14 +8,20 @@
 import SwiftUI
 
 class AppCoordinator {
+    let navigationController: UINavigationController
+    
+    init() {
+        self.navigationController = UINavigationController()
+    }
+    
     
     func start() -> some View {
-        MainTabView(coordinator: self)
+        MainTabView(coordinator: self, mainTabViewModel: MainTabViewModel(context: PersistenceController.shared.container.viewContext))
             .preferredColorScheme(.dark)
     }
     
     func showSearch() -> SearchCoordinator {
-        let searchCoordinator = SearchCoordinator()
+        let searchCoordinator = SearchCoordinator(navigationController: navigationController)
         return searchCoordinator
     }
     

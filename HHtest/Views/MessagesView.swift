@@ -11,6 +11,6 @@ struct MessagesView: View {
     @ObservedObject var viewModel: MessagesViewModel
 
     var body: some View {
-        Text("4")
+        Text("Сообщения")
     }
 }

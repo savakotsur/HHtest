@@ -11,6 +11,6 @@ struct ProfileView: View {
     @ObservedObject var viewModel: ProfileViewModel
 
     var body: some View {
-        Text("5")
+        Text("Профиль")
     }
 }

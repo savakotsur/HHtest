@@ -9,12 +9,13 @@ import SwiftUI
 
 struct MainTabView: View {
     var coordinator: AppCoordinator
+    @StateObject var mainTabViewModel: MainTabViewModel
     
     var body: some View {
         TabView {
             NavigationView() {
                 let searchCoordinator = coordinator.showSearch()
-                SearchView(viewModel: SearchViewModel(coordinator: searchCoordinator))
+                SearchView(viewModel: SearchViewModel(coordinator: searchCoordinator, context: mainTabViewModel.context))
             }
             .tabItem {
                 Image("search")
@@ -27,13 +28,15 @@ struct MainTabView: View {
             
             NavigationView() {
                 let favoritesCoordinator = coordinator.showFavorites()
-                FavoritesView(viewModel: FavoritesViewModel(coordinator: favoritesCoordinator))
+                FavoritesView(viewModel: FavoritesViewModel(coordinator: favoritesCoordinator, context: mainTabViewModel.context))
+                    .navigationTitle("Избранное")
             }
             .tabItem {
-                Image("hearttab")
+                Image("favorites")
                     .renderingMode(.template)
                 Text("Избранное")
             }
+            .badge(mainTabViewModel.favoriteVacanciesCount)
             .toolbar(.visible, for: .tabBar)
             .toolbarBackground(.visible, for: .tabBar)
             .toolbarBackground(Color("gray1"), for: .tabBar)

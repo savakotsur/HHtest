@@ -9,12 +9,13 @@ import SwiftUI
 
 struct VacancyBlock: View {
     var vacancy: Vacancy
-    @ObservedObject var viewModel: SearchViewModel
+    let onSelect: (Vacancy) -> Void
+    var onFavoriteTapped: () -> Void
     
     var body: some View {
         ZStack (alignment: .topTrailing) {
             VStack (alignment: .leading) {
-                if vacancy.lookingNumber != nil {
+                if vacancy.lookingNumber != nil && vacancy.lookingNumber != 0{
                     Text("Сейчас просматривает " + vacancy.lookingNumber!.people())
                         .foregroundColor(Color("green"))
                 }
@@ -41,7 +42,7 @@ struct VacancyBlock: View {
                     Text(vacancy.experience.previewText)
                 }
                 
-                Text("Опубликовано " + viewModel.formattedDate(from: vacancy.publishedDate))
+                Text("Опубликовано " + vacancy.publishedDate.formattedDate())
                     .foregroundColor(Color("gray3"))
                 Button(action: {
                     print("Кнопка откликнуться нажата")
@@ -59,25 +60,22 @@ struct VacancyBlock: View {
                     .resizable()
                     .frame(width: 32.0, height: 32.0)
                     .onTapGesture {
-                        viewModel.addToFavorites(vacancyID: vacancy.id)
+                        onFavoriteTapped()
                     }
             } else {
                 Image("favorites.active")
                     .resizable()
                     .frame(width: 32.0, height: 32.0)
                     .onTapGesture {
-                        viewModel.removeFromFavorites(vacancyID: vacancy.id)
+                        onFavoriteTapped()
                     }
             }
         }
         .padding(20)
         .background(Color("gray1"))
         .cornerRadius(12)
+        .onTapGesture {
+            onSelect(vacancy)
+        }
     }
 }
-
-//struct VacancyBlock_Previews: PreviewProvider {
-//    static var previews: some View {
-//        VacancyBlock(vacancy: Vacancy(id: "1", lookingNumber: 1, title: "UI/UX Designer", address: Address(town: "Минск", street: "улица Бирюзова", house: "4/5"), company: "Мобирикс", experience: Experience(previewText: "Опыт от 1 года до 3 лет", text: "Требуемый опыт: от 1 года до 3 лет"), publishedDate: "2024-02-20", isFavorite: true, salary: Salary(full: "Уровень дохода не указан", short: nil), schedules: ["полная занятость", "полный день"], appliedNumber: 147, vacancyDescription: nil, responsibilities: "", questions: []))
-//    }
-//}
