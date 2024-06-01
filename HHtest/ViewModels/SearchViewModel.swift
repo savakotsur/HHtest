@@ -8,17 +8,51 @@
 import CoreData
 import Foundation
 import Combine
+import SwiftUI
 
 class SearchViewModel: ObservableObject {
-    var coordinator: SearchCoordinator
     @Published var homeScreenData: HomeScreenData?
+    @Binding var navigationPath: NavigationPath
     private var cancellable: AnyCancellable?
     let context: NSManagedObjectContext
     
-    init(coordinator: SearchCoordinator, context: NSManagedObjectContext) {
-        self.coordinator = coordinator
+    init(context: NSManagedObjectContext, path: Binding<NavigationPath>) {
+        self._navigationPath = path
         self.context = context
         loadHomeScreen(from: URL(string: "https://run.mocky.io/v3/d67a278f-ddcb-438c-bf56-3194c529b12b")!)
+        NotificationCenter.default.addObserver(self, selector: #selector(contextDidChange), name:.NSManagedObjectContextObjectsDidChange, object: context)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name:.NSManagedObjectContextObjectsDidChange, object: context)
+        cancellable?.cancel()
+    }
+    
+    @objc func contextDidChange(_ notification: Notification) {
+        let fetchRequest: NSFetchRequest<FavoriteVacancyEntity> = FavoriteVacancyEntity.fetchRequest()
+        
+        do {
+            let favoriteVacancies = try context.fetch(fetchRequest)
+            
+            var favoriteVacanciesDict = [String: FavoriteVacancyEntity]()
+            for vacancy in favoriteVacancies {
+                favoriteVacanciesDict[vacancy.id!] = vacancy
+            }
+            
+            homeScreenData?.vacancies = homeScreenData?.vacancies.map { vacancy in
+                if let favoriteVacancy = favoriteVacanciesDict[vacancy.id] {
+                    var updatedVacancy = vacancy
+                    updatedVacancy.isFavorite = true
+                    return updatedVacancy
+                } else {
+                    var updatedVacancy = vacancy
+                    updatedVacancy.isFavorite = false
+                    return updatedVacancy
+                }
+            } ?? []
+        } catch {
+            print("Failed to fetch vacancies from CoreData: \(error)")
+        }
     }
     
     func addToFavorites(vacancyID: String) {
@@ -36,8 +70,10 @@ class SearchViewModel: ObservableObject {
     }
     
     private func saveToCoreData(vacancy: Vacancy) {
+        var savedVacancy = vacancy
+        savedVacancy.isFavorite = true
         let fetchRequest: NSFetchRequest<FavoriteVacancyEntity> = FavoriteVacancyEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", vacancy.id)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", savedVacancy.id)
         
         do {
             let results = try context.fetch(fetchRequest)
@@ -53,7 +89,6 @@ class SearchViewModel: ObservableObject {
             print("Error saving vacancy: \(error.localizedDescription)")
         }
     }
-    
     
     private func deleteFromCoreData(vacancyID: String) {
         let fetchRequest: NSFetchRequest<FavoriteVacancyEntity> = FavoriteVacancyEntity.fetchRequest()
@@ -102,9 +137,10 @@ class SearchViewModel: ObservableObject {
     }
     
     func loadHomeScreen(from url: URL) {
+        let decoder = JSONDecoder()
         cancellable = URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: HomeScreenData.self, decoder: JSONDecoder())
+            .decode(type: HomeScreenData.self, decoder: decoder)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
@@ -117,16 +153,27 @@ class SearchViewModel: ObservableObject {
     }
     
     private func syncFavoritesWithCoreData() {
-            guard let homeScreenData = self.homeScreenData else {
-                return
-            }
-            
-            for vacancy in homeScreenData.vacancies {
-                if vacancy.isFavorite {
-                    saveToCoreData(vacancy: vacancy)
-                } else {
-                    deleteFromCoreData(vacancyID: vacancy.id)
-                }
+        guard let homeScreenData = self.homeScreenData else {
+            return
+        }
+        
+        for vacancy in homeScreenData.vacancies {
+            if vacancy.isFavorite {
+                saveToCoreData(vacancy: vacancy)
+            } else {
+                deleteFromCoreData(vacancyID: vacancy.id)
             }
         }
+    }
+    
+    func didSelectVacancy(_ vacancy: Vacancy) {
+        let vacancyCoordinator = VacancyCoordinator(navigationPath: $navigationPath, vacancy: vacancy)
+        push(vacancyCoordinator)
+    }
+    
+    private func push<V>(_ value: V) where V : Hashable {
+        navigationPath.append(value)
+    }
+    
+    
 }

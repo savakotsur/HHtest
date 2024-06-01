@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
     @StateObject var viewModel: SearchViewModel
+    @State var selectedVacancy: Vacancy?
     
     var body: some View {
         VStack {
@@ -47,19 +48,26 @@ struct SearchView: View {
                         .font(.title)
                         .fontWeight(.bold)
                     if let homeScreenData = viewModel.homeScreenData {
-                        ForEach(homeScreenData.vacancies.prefix(3)) { vacancy in
-                            VacancyBlock(vacancy: vacancy, onSelect: { vacancy in
-                                viewModel.coordinator.showVacancyDetail(viewModel: VacancyViewModel(coordinator: VacancyCoordinator(), context: viewModel.context, vacancy: vacancy))
-                                print("asdasd")
+                        ForEach(homeScreenData.vacancies.prefix(3)) { myVacancy in
+                            VacancyBlock(vacancy: myVacancy, onSelect: { vacancy in
+                                selectedVacancy = myVacancy
+                                viewModel.didSelectVacancy(myVacancy)
                             }, onFavoriteTapped: {
-                                if vacancy.isFavorite {
-                                    viewModel.removeFromFavorites(vacancyID: vacancy.id)
+                                if myVacancy.isFavorite {
+                                    viewModel.removeFromFavorites(vacancyID: myVacancy.id)
                                 } else {
-                                    viewModel.addToFavorites(vacancyID: vacancy.id)
+                                    viewModel.addToFavorites(vacancyID: myVacancy.id)
                                 }
                             })
-                                .padding(.vertical, 2)
+                            .padding(.vertical, 2)
                         }
+                        //                        .navigationBarBackButtonHidden(true)
+                        .navigationDestination(for: VacancyCoordinator.self) { coordinator in
+                            if let vacancy = selectedVacancy {
+                                coordinator.view(context: viewModel.context, vacancy: vacancy)
+                            }
+                        }
+                        
                         Button(action: {
                             print("Кнопка отображения вакансий нажата")
                         })
@@ -79,3 +87,5 @@ struct SearchView: View {
         }
     }
 }
+
+

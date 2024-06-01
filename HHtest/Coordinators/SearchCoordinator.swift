@@ -2,25 +2,25 @@
 //  SearchCoordinator.swift
 //  HHtest
 //
-//  Created by Савелий Коцур on 27.05.2024.
+//  Created by Савелий Коцур on 01.06.2024.
 //
 
-import Foundation
-import UIKit
 import SwiftUI
+import CoreData
 
 class SearchCoordinator {
-    var navigationController: UINavigationController
+    @Binding var navigationPath: NavigationPath
     
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init(navigationPath: Binding<NavigationPath>) {
+        self._navigationPath = navigationPath
     }
     
-    func showVacancyDetail(viewModel: VacancyViewModel) {
-        let detailView = VacancyView(viewModel: viewModel)
-        let hostingController = UIHostingController(rootView: detailView)
-        navigationController.pushViewController(hostingController, animated: true)
-        print("Pushed vacancy")
+    @ViewBuilder
+    func view(context: NSManagedObjectContext) -> some View {
+        SearchView(viewModel: SearchViewModel(context: context, path: self.$navigationPath))
     }
     
+    func push<V>(_ value: V) where V : Hashable {
+        navigationPath.append(value)
+    }
 }

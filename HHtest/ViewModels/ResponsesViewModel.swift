@@ -8,9 +8,9 @@
 import Foundation
 
 class ResponsesViewModel: ObservableObject {
-    private var coordinator: ResponsesCoordinator
-    
-    init(coordinator: ResponsesCoordinator) {
-        self.coordinator = coordinator
-    }
+//    private var coordinator: ResponsesCoordinator
+//    
+//    init(coordinator: ResponsesCoordinator) {
+//        self.coordinator = coordinator
+//    }
 }

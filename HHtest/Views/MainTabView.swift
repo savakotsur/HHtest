@@ -8,42 +8,39 @@
 import SwiftUI
 
 struct MainTabView: View {
-    var coordinator: AppCoordinator
+    @StateObject var appCoordinator: AppCoordinator
     @StateObject var mainTabViewModel: MainTabViewModel
     
     var body: some View {
         TabView {
-            NavigationView() {
-                let searchCoordinator = coordinator.showSearch()
-                SearchView(viewModel: SearchViewModel(coordinator: searchCoordinator, context: mainTabViewModel.context))
+            NavigationStack(path: $appCoordinator.path) {
+                SearchCoordinator(navigationPath: $appCoordinator.path).view(context: mainTabViewModel.context)
             }
-            .tabItem {
-                Image("search")
-                    .renderingMode(.template)
-                Text("Поиск")
-            }
-            .toolbar(.visible, for: .tabBar)
-            .toolbarBackground(.visible, for: .tabBar)
-            .toolbarBackground(Color("gray1"), for: .tabBar)
+                .tabItem {
+                    Image("search")
+                        .renderingMode(.template)
+                    Text("Поиск")
+                }
+                .toolbar(.visible, for: .tabBar)
+                .toolbarBackground(.visible, for: .tabBar)
+                .toolbarBackground(Color("gray1"), for: .tabBar)
             
-            NavigationView() {
-                let favoritesCoordinator = coordinator.showFavorites()
-                FavoritesView(viewModel: FavoritesViewModel(coordinator: favoritesCoordinator, context: mainTabViewModel.context))
+            NavigationStack(path: $appCoordinator.path) {
+                FavoritesCoordinator(navigationPath: $appCoordinator.path).view(context: mainTabViewModel.context)
                     .navigationTitle("Избранное")
             }
-            .tabItem {
-                Image("favorites")
-                    .renderingMode(.template)
-                Text("Избранное")
-            }
-            .badge(mainTabViewModel.favoriteVacanciesCount)
-            .toolbar(.visible, for: .tabBar)
-            .toolbarBackground(.visible, for: .tabBar)
-            .toolbarBackground(Color("gray1"), for: .tabBar)
+                .tabItem {
+                    Image("favorites")
+                        .renderingMode(.template)
+                    Text("Избранное")
+                }
+                .badge(mainTabViewModel.favoriteVacanciesCount)
+                .toolbar(.visible, for: .tabBar)
+                .toolbarBackground(.visible, for: .tabBar)
+                .toolbarBackground(Color("gray1"), for: .tabBar)
             
             NavigationView() {
-                let responsesCoordinator = coordinator.showResponses()
-                ResponsesView(viewModel: ResponsesViewModel(coordinator: responsesCoordinator))
+                ResponsesView(viewModel: ResponsesViewModel())
             }
             .tabItem {
                 Image("responses")
@@ -55,8 +52,7 @@ struct MainTabView: View {
             .toolbarBackground(Color("gray1"), for: .tabBar)
             
             NavigationView() {
-                let messagesCoordinator = coordinator.showMessages()
-                MessagesView(viewModel: MessagesViewModel(coordinator: messagesCoordinator))
+                MessagesView(viewModel: MessagesViewModel())
             }
             .tabItem {
                 Image("messages")
@@ -68,8 +64,7 @@ struct MainTabView: View {
             .toolbarBackground(Color("gray1"), for: .tabBar)
             
             NavigationView() {
-                let profileCoordinator = coordinator.showProfile()
-                ProfileView(viewModel: ProfileViewModel(coordinator: profileCoordinator))
+                ProfileView(viewModel: ProfileViewModel())
             }
             .tabItem {
                 Image("profile")
@@ -80,5 +75,6 @@ struct MainTabView: View {
             .toolbarBackground(.visible, for: .tabBar)
             .toolbarBackground(Color("gray1"), for: .tabBar)
         }
+        .preferredColorScheme(.dark)
     }
 }

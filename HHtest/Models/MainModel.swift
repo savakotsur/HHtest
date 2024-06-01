@@ -42,6 +42,59 @@ struct Vacancy: Identifiable, Decodable {
     let vacancyDescription: String?
     let responsibilities: String
     let questions: [String]
+    
+    enum CodingKeys: String, CodingKey {
+        case vacancyDescription = "description"
+        
+        case id
+        case lookingNumber
+        case title
+        case address
+        case company
+        case experience
+        case publishedDate
+        case isFavorite
+        case salary
+        case schedules
+        case appliedNumber
+        case responsibilities
+        case questions
+    }
+    
+    init(id: String, lookingNumber: Int?, title: String, address: Address, company: String, experience: Experience, publishedDate: String, isFavorite: Bool, salary: Salary, schedules: [String], appliedNumber: Int?, vacancyDescription: String?, responsibilities: String, questions: [String]) {
+        self.id = id
+        self.lookingNumber = lookingNumber
+        self.title = title
+        self.address = address
+        self.company = company
+        self.experience = experience
+        self.publishedDate = publishedDate
+        self.isFavorite = isFavorite
+        self.salary = salary
+        self.schedules = schedules
+        self.appliedNumber = appliedNumber
+        self.vacancyDescription = vacancyDescription
+        self.responsibilities = responsibilities
+        self.questions = questions
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.lookingNumber = try container.decodeIfPresent(Int.self, forKey: .lookingNumber)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.address = try container.decode(Address.self, forKey: .address)
+        self.company = try container.decode(String.self, forKey: .company)
+        self.experience = try container.decode(Experience.self, forKey: .experience)
+        self.publishedDate = try container.decode(String.self, forKey: .publishedDate)
+        self.isFavorite = try container.decode(Bool.self, forKey: .isFavorite)
+        self.salary = try container.decode(Salary.self, forKey: .salary)
+        self.schedules = try container.decode([String].self, forKey: .schedules)
+        self.appliedNumber = try container.decodeIfPresent(Int.self, forKey: .appliedNumber)
+        self.vacancyDescription = try container.decodeIfPresent(String.self, forKey: .vacancyDescription)
+        self.responsibilities = try container.decode(String.self, forKey: .responsibilities)
+        self.questions = try container.decode([String].self, forKey: .questions)
+    }
 }
 
 // MARK: - Address
@@ -66,6 +119,21 @@ extension Int {
         if String(self % 10).contains(/[2-4]/) {peopleString = "человека"}
         if 11...14 ~= self % 100 {peopleString = "человек"}
         return "\(self) " + peopleString
+    }
+    
+    func looking() -> String {
+        var looking = ""
+        if self == 1 {looking = "просматривает"}
+        else {looking = "просматривают"}
+        return looking
+    }
+    
+    func applied() -> String {
+        var appliedString = ""
+        appliedString.append(String(self) + " человек уже ")
+        if self == 1 {appliedString.append("откликнулся")}
+        else {appliedString.append("откликнулись")}
+        return appliedString
     }
     
     func vacancies() -> String {

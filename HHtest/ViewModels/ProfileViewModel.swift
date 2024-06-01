@@ -8,9 +8,9 @@
 import Foundation
 
 class ProfileViewModel: ObservableObject {
-    private var coordinator: ProfileCoordinator
-    
-    init(coordinator: ProfileCoordinator) {
-        self.coordinator = coordinator
-    }
+//    private var coordinator: ProfileCoordinator
+//    
+//    init(coordinator: ProfileCoordinator) {
+//        self.coordinator = coordinator
+//    }
 }

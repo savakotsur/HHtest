@@ -11,11 +11,16 @@ let screenSize = UIScreen.main.bounds
 
 @main
 struct HHtestApp: App {
+    @StateObject private var appCoordinator = AppCoordinator(path: NavigationPath(), context: PersistenceController.shared.container.viewContext)
     
     var body: some Scene {
         WindowGroup {
-            let appCoordinator = AppCoordinator()
-            appCoordinator.start()
+            appCoordinator.view()
+                .navigationDestination(
+                    for: AuthenticationCoordinator.self
+                ) { coordinator in
+                    coordinator.view()
+                }
         }
     }
 }

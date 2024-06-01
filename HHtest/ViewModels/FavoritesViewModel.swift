@@ -7,15 +7,15 @@
 
 import CoreData
 import Foundation
+import SwiftUI
 
 class FavoritesViewModel: ObservableObject {
-    @Published var coordinator: FavoritesCoordinator
     @Published var favoriteVacancies: [Vacancy] = []
-    
+    @Binding var navigationPath: NavigationPath
     let context: NSManagedObjectContext
     
-    init(coordinator: FavoritesCoordinator, context: NSManagedObjectContext) {
-        self.coordinator = coordinator
+    init(context: NSManagedObjectContext, path: Binding<NavigationPath>) {
+        self._navigationPath = path
         self.context = context
         fetchFavoriteVacancies()
     }
@@ -90,5 +90,14 @@ class FavoritesViewModel: ObservableObject {
         )
         
         return vacancy
+    }
+    
+    func didSelectVacancy(_ vacancy: Vacancy) {
+        let vacancyCoordinator = VacancyCoordinator(navigationPath: $navigationPath, vacancy: vacancy)
+        push(vacancyCoordinator)
+    }
+    
+    private func push<V>(_ value: V) where V : Hashable {
+        navigationPath.append(value)
     }
 }

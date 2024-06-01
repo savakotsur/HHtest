@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FavoritesView: View {
     @ObservedObject var viewModel: FavoritesViewModel
+    @State var selectedVacancy: Vacancy?
     
     var body: some View {
         ScrollView (showsIndicators: false) {
@@ -21,15 +22,18 @@ struct FavoritesView: View {
                     Spacer()
                 }
                 .padding(.horizontal, 20)
-                ForEach(viewModel.favoriteVacancies) { vacancy in
-                    VacancyBlock(vacancy: vacancy, onSelect: { vacancy in
-                        //                        NavigationView() {
-                        //                            let vacancyCoordinator = viewModel.coordinator.showVacancy()
-                        //                            VacancyView(viewModel: VacancyViewModel(coordinator: vacancyCoordinator, context: viewModel.context, vacancy: vacancy)
-                        print("mdai")
+                ForEach(viewModel.favoriteVacancies) { myVacancy in
+                    VacancyBlock(vacancy: myVacancy, onSelect: { vacancy in
+                        selectedVacancy = myVacancy
+                        viewModel.didSelectVacancy(myVacancy)
                     }, onFavoriteTapped: {
-                        viewModel.removeFromFavorites(vacancyID: vacancy.id)
+                        viewModel.removeFromFavorites(vacancyID: myVacancy.id)
                     })
+                }
+                .navigationDestination(for: VacancyCoordinator.self) { coordinator in
+                    if let vacancy = selectedVacancy {
+                        coordinator.view(context: viewModel.context, vacancy: vacancy)
+                    }
                 }
                 .padding(.horizontal, 20)
             }
