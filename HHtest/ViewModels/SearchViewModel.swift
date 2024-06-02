@@ -40,7 +40,7 @@ class SearchViewModel: ObservableObject {
             }
             
             homeScreenData?.vacancies = homeScreenData?.vacancies.map { vacancy in
-                if let favoriteVacancy = favoriteVacanciesDict[vacancy.id] {
+                if favoriteVacanciesDict[vacancy.id] != nil {
                     var updatedVacancy = vacancy
                     updatedVacancy.isFavorite = true
                     return updatedVacancy

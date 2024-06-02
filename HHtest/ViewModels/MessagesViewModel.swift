@@ -8,9 +8,5 @@
 import Foundation
 
 class MessagesViewModel: ObservableObject {
-//    private var coordinator: MessagesCoordinator
-//    
-//    init(coordinator: MessagesCoordinator) {
-//        self.coordinator = coordinator
-//    }
+    
 }

@@ -15,6 +15,11 @@
 		E2478DEF2C0BC05F004D0826 /* ToolbarActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2478DEE2C0BC05F004D0826 /* ToolbarActions.swift */; };
 		E2478DF12C0BEA73004D0826 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2478DF02C0BEA73004D0826 /* LoginView.swift */; };
 		E2478DF32C0BEAC7004D0826 /* EmailApproveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2478DF22C0BEAC7004D0826 /* EmailApproveView.swift */; };
+		E2478DF52C0CA2B6004D0826 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2478DF42C0CA2B6004D0826 /* LoginViewModel.swift */; };
+		E2478DF92C0CB080004D0826 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2478DF82C0CB080004D0826 /* CustomTextField.swift */; };
+		E2478DFB2C0CB323004D0826 /* SearchForEmpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2478DFA2C0CB323004D0826 /* SearchForEmpl.swift */; };
+		E2478DFD2C0CC95F004D0826 /* CodeDigitField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2478DFC2C0CC95F004D0826 /* CodeDigitField.swift */; };
+		E2478DFF2C0CCB0E004D0826 /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2478DFE2C0CCB0E004D0826 /* CodeInputView.swift */; };
 		E2D20A952C08EF5500CB70F4 /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D20A942C08EF5500CB70F4 /* MainTabViewModel.swift */; };
 		E2D752602C050F9F00B67887 /* HHtestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D7525F2C050F9F00B67887 /* HHtestApp.swift */; };
 		E2D752642C050FA000B67887 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D752632C050FA000B67887 /* Assets.xcassets */; };
@@ -52,6 +57,11 @@
 		E2478DEE2C0BC05F004D0826 /* ToolbarActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarActions.swift; sourceTree = "<group>"; };
 		E2478DF02C0BEA73004D0826 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		E2478DF22C0BEAC7004D0826 /* EmailApproveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailApproveView.swift; sourceTree = "<group>"; };
+		E2478DF42C0CA2B6004D0826 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		E2478DF82C0CB080004D0826 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		E2478DFA2C0CB323004D0826 /* SearchForEmpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchForEmpl.swift; sourceTree = "<group>"; };
+		E2478DFC2C0CC95F004D0826 /* CodeDigitField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeDigitField.swift; sourceTree = "<group>"; };
+		E2478DFE2C0CCB0E004D0826 /* CodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeInputView.swift; sourceTree = "<group>"; };
 		E2D20A942C08EF5500CB70F4 /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
 		E2D7525C2C050F9F00B67887 /* HHtest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HHtest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D7525F2C050F9F00B67887 /* HHtestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HHtestApp.swift; sourceTree = "<group>"; };
@@ -167,6 +177,7 @@
 				E2D752912C052BF600B67887 /* MessagesViewModel.swift */,
 				E2D752932C052C0000B67887 /* ProfileViewModel.swift */,
 				E2EE65262C09304B006BC631 /* VacancyViewModel.swift */,
+				E2478DF42C0CA2B6004D0826 /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -193,6 +204,10 @@
 				E2478DEA2C0BB216004D0826 /* VacancyTextResponsibilities.swift */,
 				E2478DEC2C0BC00A004D0826 /* ResponseButton.swift */,
 				E2478DEE2C0BC05F004D0826 /* ToolbarActions.swift */,
+				E2478DF82C0CB080004D0826 /* CustomTextField.swift */,
+				E2478DFA2C0CB323004D0826 /* SearchForEmpl.swift */,
+				E2478DFC2C0CC95F004D0826 /* CodeDigitField.swift */,
+				E2478DFE2C0CCB0E004D0826 /* CodeInputView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -269,11 +284,16 @@
 			files = (
 				E2D752992C06048800B67887 /* VacancyBlock.swift in Sources */,
 				E2D752862C0529E300B67887 /* ResponsesView.swift in Sources */,
+				E2478DFD2C0CC95F004D0826 /* CodeDigitField.swift in Sources */,
+				E2478DF52C0CA2B6004D0826 /* LoginViewModel.swift in Sources */,
 				E2D7528C2C052BC900B67887 /* SearchViewModel.swift in Sources */,
 				E2478DEF2C0BC05F004D0826 /* ToolbarActions.swift in Sources */,
+				E2478DFB2C0CB323004D0826 /* SearchForEmpl.swift in Sources */,
 				E2D752722C05221400B67887 /* AppCoordinator.swift in Sources */,
 				E21AA38C2C0A9869002E9771 /* FavoritesCoordinator.swift in Sources */,
+				E2478DFF2C0CCB0E004D0826 /* CodeInputView.swift in Sources */,
 				E2E25C1D2C0A8ADF00034446 /* VacancyCoordinator.swift in Sources */,
+				E2478DF92C0CB080004D0826 /* CustomTextField.swift in Sources */,
 				E2D752882C0529EE00B67887 /* MessagesView.swift in Sources */,
 				E2D752962C0601DE00B67887 /* MainModel.swift in Sources */,
 				E2D752A22C07ED5100B67887 /* CoreDataManager.swift in Sources */,

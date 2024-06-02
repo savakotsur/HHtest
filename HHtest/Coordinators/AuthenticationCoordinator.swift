@@ -8,85 +8,30 @@
 import Foundation
 import SwiftUI
 
-enum AuthenticationPage {
-    case login, forgotPassword
-}
-
-final class AuthenticationCoordinator: Hashable {
-    @Binding var navigationPath: NavigationPath
+final class AuthenticationCoordinator {
+    @Binding var isAuthenticated: Bool
+    @Binding var approvingEmail: Bool
+    @Binding var email: String
+    var id = UUID()
     
-    private var id: UUID
-    private var output: Output?
-    private var page: AuthenticationPage
-    
-    struct Output {
-        var goToMainScreen: () -> Void
-    }
-    
-    init(
-        page: AuthenticationPage,
-        navigationPath: Binding<NavigationPath>,
-        output: Output? = nil
-    ) {
-        id = UUID()
-        self.page = page
-        self.output = output
-        self._navigationPath = navigationPath
+    init(isAuthenticated: Binding<Bool>, navigationPath: NavigationPath, email: Binding<String>, approvingEmail: Binding<Bool>) {
+        self._isAuthenticated = isAuthenticated
+        self._email = email
+        self._approvingEmail = approvingEmail
     }
     
     @ViewBuilder
-    func view() -> some View {
-        switch self.page {
-        case .login:
-            loginView()
-        case .forgotPassword:
-            forgotPasswordView()
-        }
+    func loginView(approvingEmail: Binding<Bool>, email: Binding<String>) -> some View {
+        LoginView(viewModel: LoginViewModel(), approvingEmail: $approvingEmail, email: $email)
+            .navigationTitle("Вход в личный кабинет")
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+    @ViewBuilder
+    func approveView(isAuthenticated: Binding<Bool>) -> some View {
+        EmailApproveView(email: email, isAuthenticated: $isAuthenticated)
     }
     
-    static func == (
-        lhs: AuthenticationCoordinator,
-        rhs: AuthenticationCoordinator
-    ) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-//    private func loginView() -> some View {
-//        let loginView = LoginView(
-//            output:
-//                    .init(
-//                        goToMainScreen: {
-//                            self.output?.goToMainScreen()
-//                        },
-//                        goToForgotPassword:  {
-//                            self.push(
-//                                AuthenticationCoordinator(
-//                                    page: .forgotPassword,
-//                                    navigationPath: self.$navigationPath
-//                                )
-//                            )
-//                        }
-//                    )
-//        )
-//        return loginView
-//    }
-    
-//    private func forgotPasswordView() -> some View {
-//        let forgotPasswordView = ForgotPasswordView(output:
-//                .init(
-//                    goToForgotPasswordWebsite: {
-//                        self.goToForgotPasswordWebsite()
-//                    }
-//                )
-//        )
-//        return forgotPasswordView
-//    }
-    
-    func push<V>(_ value: V) where V : Hashable {
-        navigationPath.append(value)
+    func completeAuthentication() {
+        isAuthenticated = true
     }
 }

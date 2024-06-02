@@ -6,42 +6,20 @@
 //
 
 import SwiftUI
+import CoreData
 
-class AppCoordinator {
-    let navigationController: UINavigationController
+class AppCoordinator: ObservableObject {
+    @Published var path: NavigationPath
+    @Published var context: NSManagedObjectContext
     
-    init() {
-        self.navigationController = UINavigationController()
+    init(path: NavigationPath, context: NSManagedObjectContext) {
+        self.path = path
+        self.context = context
     }
     
-    
-    func start() -> some View {
-        MainTabView(coordinator: self, mainTabViewModel: MainTabViewModel(context: PersistenceController.shared.container.viewContext))
-            .preferredColorScheme(.dark)
+    @ViewBuilder
+    func view() -> some View {
+        MainTabView(mainTabViewModel: MainTabViewModel(context: self.context), appCoordinator: self)
     }
     
-    func showSearch() -> SearchCoordinator {
-        let searchCoordinator = SearchCoordinator(navigationController: navigationController)
-        return searchCoordinator
-    }
-    
-    func showFavorites() -> FavoritesCoordinator {
-        let favoritesCoordinator = FavoritesCoordinator()
-        return favoritesCoordinator
-    }
-    
-    func showResponses() -> ResponsesCoordinator {
-        let responsesCoordinator = ResponsesCoordinator()
-        return responsesCoordinator
-    }
-    
-    func showMessages() -> MessagesCoordinator {
-        let messagesCoordinator = MessagesCoordinator()
-        return messagesCoordinator
-    }
-    
-    func showProfile() -> ProfileCoordinator {
-        let profileCoordinator = ProfileCoordinator()
-        return profileCoordinator
-    }
 }

@@ -16,11 +16,6 @@ struct HHtestApp: App {
     var body: some Scene {
         WindowGroup {
             appCoordinator.view()
-                .navigationDestination(
-                    for: AuthenticationCoordinator.self
-                ) { coordinator in
-                    coordinator.view()
-                }
         }
     }
 }
