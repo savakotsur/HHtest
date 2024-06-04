@@ -14,7 +14,6 @@ struct MainTabView: View {
     @State private var approvingEmail = false
     @State private var email = ""
     
-    
     var body: some View {
         ZStack {
             TabView {

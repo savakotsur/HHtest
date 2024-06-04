@@ -48,7 +48,7 @@ struct SearchView: View {
                         .font(.title)
                         .fontWeight(.bold)
                     if let homeScreenData = viewModel.homeScreenData {
-                        ForEach(homeScreenData.vacancies.prefix(3)) { myVacancy in
+                        ForEach(homeScreenData.vacancies) { myVacancy in
                             VacancyBlock(vacancy: myVacancy, onSelect: { vacancy in
                                 selectedVacancy = myVacancy
                                 viewModel.didSelectVacancy(myVacancy)
